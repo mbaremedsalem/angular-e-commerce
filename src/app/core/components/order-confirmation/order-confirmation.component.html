@@ -1,0 +1,80 @@
+<app-header></app-header>
+<div class="confirmation-container">
+    <div *ngIf="isLoading" class="loading">
+      <i class="fas fa-spinner fa-spin"></i> Chargement de votre commande...
+    </div>
+  
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  
+    <div *ngIf="order && !isLoading" class="confirmation-content">
+      <div class="confirmation-header">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h2>Merci pour votre commande !</h2>
+        <p>Votre commande #{{ order.id }} a été passée avec succès.</p>
+      </div>
+  
+      <div class="order-summary">
+        <h3>Résumé de la commande</h3>
+        
+        <div class="order-details">
+          <div class="detail-row">
+            <span>Date de la commande</span>
+            <span>{{ order.created_at | date:'medium' }}</span>
+          </div>
+          <div class="detail-row">
+            <span>Statut</span>
+            <span class="status-badge">{{ order.status }}</span>
+          </div>
+          <div class="detail-row">
+            <span>Mode de paiement</span>
+            <span>{{ order.payment_mode }}</span>
+          </div>
+          <div class="detail-row">
+            <span>Statut du paiement</span>
+            <span class="payment-status">{{ order.payment_status }}</span>
+          </div>
+          <div class="detail-row total">
+            <span>Total</span>
+            <span>{{ order.total_amount | currency:'MRU':'symbol' }}</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="order-items">
+        <h3>Articles commandés</h3>
+        
+        <div *ngFor="let item of order.orderItems" class="order-item">
+          <div class="item-image">
+            <img [src]="'http://192.168.0.199:8000/'+item.image" [alt]="item.name">
+          </div>
+          <div class="item-details">
+            <h4>{{ item.name }}</h4>
+            <p>Quantité: {{ item.quantity }}</p>
+            <p class="price">{{ item.price | currency:'MRU':'symbol' }}</p>
+          </div>
+          <div class="item-total">
+            {{ (item.price * item.quantity) | currency:'MRU':'symbol' }}
+          </div>
+        </div>
+      </div>
+  
+      <div class="shipping-address">
+        <h3>Adresse de livraison</h3>
+        <address>
+          {{ order.street_fr }}<br>
+          {{ order.city_fr }}, {{ order.state_fr }} {{ order.zip_code }}<br>
+          {{ order.country }}<br>
+          Téléphone: {{ order.phone }}
+        </address>
+      </div>
+  
+      <div class="actions">
+        <a routerLink="/orders" class="view-orders-btn">Voir mes commandes</a>
+        <a routerLink="/products" class="continue-shopping-btn">Continuer vos achats</a>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>

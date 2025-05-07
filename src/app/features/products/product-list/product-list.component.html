@@ -1,0 +1,15 @@
+<div class="product-list">
+    <!-- ... autres éléments ... -->
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+    <div *ngIf="!isLoading && !error" class="products-container">
+      <app-product-card 
+        *ngFor="let product of products" 
+        [product]="product"
+        (viewDetails)="onViewDetails($event)"
+        (addToCart)="onAddToCart($event)">
+      </app-product-card>
+    </div>
+</div>

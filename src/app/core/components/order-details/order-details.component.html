@@ -1,0 +1,76 @@
+<app-header></app-header>
+
+<div class="order-details-container">
+    <div *ngIf="loading" class="loading-spinner">
+      <i class="fas fa-spinner fa-spin"></i> Chargement des détails de la commande...
+    </div>
+  
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  
+    <div *ngIf="order && !loading" class="order-content">
+      <div class="order-header">
+        <h2>Détails de la commande #{{ order.id }}</h2>
+        
+        <div class="language-switcher">
+          <button (click)="switchLanguage('fr')" [class.active]="activeLanguage === 'fr'">FR</button>
+          <button (click)="switchLanguage('ar')" [class.active]="activeLanguage === 'ar'">AR</button>
+        </div>
+      </div>
+  
+      <div class="order-meta">
+        <div class="meta-item">
+          <span class="meta-label">Date:</span>
+          <span class="meta-value">{{ formatDate(order.created_at) }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Statut:</span>
+          <span [class]="getStatusClass(order.status)">{{ order.status }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Paiement:</span>
+          <span class="meta-value">{{ order.payment_status }} ({{ order.payment_mode }})</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Total:</span>
+          <span class="meta-value total-amount">{{ order.total_amount }} MRU</span>
+        </div>
+      </div>
+  
+  
+        <div class="order-section">
+            <h3>Articles</h3>
+            <div class="order-items">
+              <div *ngFor="let item of order.orderItems" class="order-item">
+                <img [src]="'http://192.168.0.199:8000' + item.image" [alt]="item.name" 
+                     class="item-image" (error)="handleImageError($event)">
+                <div class="item-details">
+                  <h4>{{ getItemName(item) }}</h4>
+                  <p class="item-price">{{ item.price }} MRU × {{ item.quantity }}</p>
+                  <p class="item-total">{{ getItemTotal(item) }} MRU</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div class="order-section">
+          <h3>Adresse de livraison</h3>
+          <div class="address-details">
+            <p>{{ getTranslated('street') }}</p>
+            <p>{{ getTranslated('city') }}, {{ getTranslated('state') }}</p>
+            <p>Code postal: {{ order.zip_code }}</p>
+            <p>{{ order.country }}</p>
+            <p>Téléphone: {{ order.phone }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="order-actions">
+        <button routerLink="/orders" class="btn-back">
+          <i class="fas fa-arrow-left"></i> Retour aux commandes
+        </button>
+      </div>
+    </div>
+
+    <app-footer></app-footer>

@@ -1,0 +1,122 @@
+<div class="product-detail-container">
+    <div *ngIf="isLoading" class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  
+    <div *ngIf="product && !isLoading" class="product-content">
+      <!-- Gallery Produit -->
+      <div class="product-gallery">
+        <div class="main-image">
+          <img [src]="product.images[activeImageIndex].image" [alt]="product.name">
+        </div>
+        <div class="thumbnail-container">
+          <div *ngFor="let image of product.images; let i = index" 
+               class="thumbnail" 
+               [class.active]="i === activeImageIndex"
+               (click)="setActiveImage(i)">
+            <img [src]="image.image" [alt]="'Thumbnail ' + (i + 1)">
+          </div>
+        </div>
+      </div>
+  
+      <!-- Détails Produit -->
+      <div class="product-info">
+        <h1>{{ product.name }}</h1>
+        
+        <div class="price-section">
+          <span class="current-price">{{ product.price }} MRU</span>
+          <span *ngIf="product.old_price" class="old-price">{{ product.old_price }} MRU</span>
+        </div>
+  
+        <div class="rating">
+          <div class="stars">
+            <span *ngFor="let star of [1,2,3,4,5]" 
+                  [class.filled]="star <= product.ratings">★</span>
+          </div>
+          <span class="rating-value">{{ product.ratings }} ({{ product.reviews.length }} reviews)</span>
+        </div>
+  
+        <div class="stock-status">
+          <span [class.in-stock]="product.stock > 0" [class.out-of-stock]="product.stock <= 0">
+            {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+          </span>
+        </div>
+  
+        <p class="description">{{ product.description }}</p>
+  
+        <button (click)="addToCart()" class="add-to-cart" [disabled]="product.stock <= 0">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  
+    <!-- Section Avis -->
+    <div *ngIf="product" class="reviews-section">
+      <h2>Customer Reviews</h2>
+      
+      <div *ngIf="product.reviews.length === 0" class="no-reviews">
+        <p>No reviews yet. Be the first to review!</p>
+      </div>
+  
+      <div *ngFor="let review of product.reviews" class="review-card">
+        <div class="review-header">
+          <div class="review-rating">
+            <span *ngFor="let star of [1,2,3,4,5]" [class.filled]="star <= review.rating">★</span>
+          </div>
+          <span class="review-date">{{ review.created_at | date }}</span>
+        </div>
+        <p class="review-comment">{{ review.comment }}</p>
+        <p class="review-author">By {{ review.user_name || 'Anonymous' }}</p>
+      </div>
+  
+      <!-- Formulaire d'avis -->
+      <div *ngIf="isAuthenticated" class="review-form-container">
+        <h3>Write a Review</h3>
+        
+        <div *ngIf="reviewSuccess" class="success-message">
+          Thank you for your review!
+        </div>
+        
+        <form [formGroup]="reviewForm" (ngSubmit)="submitReview()" class="review-form">
+          <div class="form-group">
+            <label>Your Rating</label>
+            <div class="rating-input">
+              <span *ngFor="let star of [1,2,3,4,5]" 
+                    (click)="reviewForm.get('rating')?.setValue(star)"
+                    [class.selected]="star <= reviewForm.get('rating')?.value">★</span>
+            </div>
+            <div *ngIf="reviewForm.get('rating')?.invalid && reviewForm.get('rating')?.touched" 
+                 class="error-message">
+              Please select a rating
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="comment">Your Review</label>
+            <textarea id="comment" formControlName="comment" rows="5"></textarea>
+            <div *ngIf="reviewForm.get('comment')?.invalid && reviewForm.get('comment')?.touched" 
+                 class="error-message">
+              Please write a review (minimum 10 characters)
+            </div>
+          </div>
+  
+          <button type="submit" class="submit-review" [disabled]="isSubmittingReview || reviewForm.invalid">
+            <span *ngIf="!isSubmittingReview">Submit Review</span>
+            <span *ngIf="isSubmittingReview">Submitting...</span>
+          </button>
+  
+          <div *ngIf="reviewError" class="error-message">
+            {{ reviewError }}
+          </div>
+        </form>
+      </div>
+  
+      <div *ngIf="!isAuthenticated" class="login-prompt">
+        <p>Please <a routerLink="/login">login</a> to write a review.</p>
+      </div>
+    </div>
+  </div>

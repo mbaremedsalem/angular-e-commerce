@@ -1,0 +1,84 @@
+<header class="header">
+  <div class="header-top">
+    <div class="container">
+
+      <div class="header__logo">
+        <a routerLink="/">
+          <img src="/assets/images/hero-bg.jpg" alt="Logo" width="60px" class="logo-image">
+        </a>
+      </div>
+
+      <div class="search-bar">
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery" 
+          placeholder="Rechercher des produits..." 
+          (keyup.enter)="search()"
+        >
+        <button (click)="search()">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+
+      <div class="header-actions">
+        <div class="account" (click)="toggleMenu()">
+          <i class="fas fa-user"></i>
+          <span *ngIf="isLoggedIn$ | async">Mon Compte</span>
+          <span *ngIf="!(isLoggedIn$ | async)">Connexion</span>
+          <div class="dropdown-menu" [class.open]="isMenuOpen">
+            <a *ngIf="!(isLoggedIn$ | async)" routerLink="/login">Se connecter</a>
+            <a *ngIf="!(isLoggedIn$ | async)" routerLink="/register">S'inscrire</a>
+            <a *ngIf="isLoggedIn$ | async" routerLink="/profile" (click)="isMenuOpen = false">Profil</a>
+            <a *ngIf="isLoggedIn$ | async" (click)="logout()">Déconnexion</a>
+          </div>
+        </div>
+
+        <a routerLink="/cart" class="cart">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+        </a>
+
+        <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="container">
+      <ul class="nav-links">
+        <li *ngFor="let category of categories">
+          <a [routerLink]="['/category', category.id]">{{ category.name }}</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" [class.open]="isMobileMenuOpen">
+    <div class="mobile-menu-header">
+      <button (click)="toggleMobileMenu()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <ul class="mobile-nav-links">
+      <li *ngFor="let category of categories">
+        <a [routerLink]="['/category', category.id]" (click)="toggleMobileMenu()">{{ category.name }}</a>
+      </li>
+      <li>
+        <a routerLink="/profile" (click)="toggleMobileMenu()">Profil</a>
+      </li>
+      <li>
+        <a routerLink="/cart" (click)="toggleMobileMenu()">Panier</a>
+      </li>
+      <li *ngIf="isLoggedIn$ | async">
+        <a (click)="logout(); toggleMobileMenu()">Déconnexion</a>
+      </li>
+      <li *ngIf="!(isLoggedIn$ | async)">
+        <a routerLink="/login" (click)="toggleMobileMenu()">Connexion</a>
+      </li>
+    </ul>
+  </div>
+</header>
+

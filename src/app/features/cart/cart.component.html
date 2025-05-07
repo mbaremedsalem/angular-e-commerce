@@ -1,0 +1,55 @@
+<app-header></app-header>
+<div class="cart-container">
+  <h2>Votre Panier</h2>
+  
+  <div *ngIf="(cartItems$ | async)?.length === 0" class="empty-cart">
+    <p>Votre panier est vide</p>
+    <a routerLink="/products" class="continue-shopping">Continuer vos achats</a>
+  </div>
+
+  <div *ngIf="(cartItems$ | async)!.length > 0" class="cart-content">
+    <div class="cart-items">
+      <div *ngFor="let item of cartItems$ | async" class="cart-item">
+        <div class="item-image">
+          <img [src]="item.image || 'assets/images/placeholder.png'" [alt]="item.name">
+        </div>
+        <div class="item-details">
+          <h3>{{ item.name }}</h3>
+          <p class="price">{{ item.price | currency:'MRU':'symbol' }}</p>
+          <div class="quantity-control">
+            <label>Quantité:</label>
+            <input type="number" [value]="item.quantity" min="1" 
+                   (change)="updateQuantity(item.product, $event)">
+            <button (click)="removeItem(item.product)" class="remove-btn">
+              <i class="fas fa-trash"></i> Supprimer
+            </button>
+          </div>
+        </div>
+        <div class="item-total">
+          {{ (item.price * item.quantity) | currency:'MRU':'symbol' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-summary">
+      <h3>Résumé de la commande</h3>
+      <div class="summary-row">
+        <span>Articles ({{ totalItems }})</span>
+        <span>{{ totalPrice | currency:'MRU':'symbol' }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Livraison</span>
+        <span>Gratuite</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>{{ totalPrice | currency:'MRU':'symbol' }}</span>
+      </div>
+      <button (click)="proceedToCheckout()" class="checkout-btn">
+        Passer la commande
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

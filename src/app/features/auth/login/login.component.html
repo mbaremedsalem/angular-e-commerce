@@ -1,0 +1,48 @@
+<div class="login-container">
+    <div class="login-card">
+      <h1>FURNITURE SHOP</h1>
+      <h2>LOGIN</h2>
+  
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username or email address</label>
+          <input 
+            type="email" 
+            id="username" 
+            formControlName="username" 
+            placeholder="Required"
+            [class.invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+          <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="error-message">
+            Please enter a valid email address
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password" 
+            placeholder="Required"
+            [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+            Password is required
+          </div>
+        </div>
+  
+        <div class="remember-me">
+          <input type="checkbox" id="rememberMe" formControlName="rememberMe">
+          <label for="rememberMe">Remember me</label>
+        </div>
+  
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+  
+        <button type="submit" class="login-button" [disabled]="isLoading">
+          <span *ngIf="!isLoading">LOG IN</span>
+          <span *ngIf="isLoading">LOGGING IN...</span>
+        </button>
+      </form>
+    </div>
+  </div>

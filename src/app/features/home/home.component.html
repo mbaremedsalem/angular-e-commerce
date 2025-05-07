@@ -1,0 +1,65 @@
+<div class="home-page">
+        <app-header></app-header>
+  
+    <main class="main-content">
+        <!-- Hero Banner with Carousel -->
+        <section class="hero-banner">
+            <div class="banner-carousel">
+                <div *ngFor="let banner of banners; let i = index" 
+                     class="banner-slide" 
+                     [class.active]="currentBannerIndex === i">
+                    <img [src]="banner.image" alt="Promotional banner" class="banner-image">
+                    <div class="banner-overlay">
+                        <div class="container">
+                            <h1>Bienvenue sur notre boutique</h1>
+                            <p>Découvrez nos meilleures offres</p>
+                            <a 
+                                [routerLink]="banner.category ? ['/products', banner.category.id] : '/products'" 
+                                class="btn btn-primary">
+                                {{ banner.category ? 'Voir ' + banner.category.name : 'Voir les produits' }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="banner-indicators" *ngIf="banners.length > 1">
+                <button *ngFor="let banner of banners; let i = index" 
+                        [class.active]="currentBannerIndex === i"
+                        (click)="selectBanner(i)"></button>
+            </div>
+        </section>
+  
+        <!-- Categories Section -->
+        <section class="categories-section">
+            <div class="container">
+                <h2>Nos catégories</h2>
+                <div class="categories-grid">
+                    <a *ngFor="let category of featuredCategories" 
+                       [routerLink]="['/products', category.slug || category.id]"
+                       class="category-card">
+                       <img [src]="category.image" [alt]="category.name" 
+                       onerror="this.src='assets/images/default-category.jpg'">
+                       
+                      <h3>{{ category.name }}</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+  
+       <!-- Featured Products -->
+       <section class="featured-products">
+        <div class="container">
+            <h2>Nos produits phares</h2>
+            
+            <app-product-list 
+                [products]="featuredProducts"
+                [isLoading]="homeProductsLoading"
+                [title]="'Nos Produits Phares'"
+                [showViewAll]="true">
+            </app-product-list>
+        </div>
+    </section>
+    </main>
+  
+    <app-footer></app-footer>
+</div>

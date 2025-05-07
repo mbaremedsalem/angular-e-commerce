@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+// styles.scss (global)
+// @import '~bootstrap/dist/css/bootstrap.min.css'; // Si vous utilisez Bootstrap
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.error-message {
+  color: #dc3545;
+  padding: 1rem;
+  text-align: center;
+}
+
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

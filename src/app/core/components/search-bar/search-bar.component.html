@@ -1,0 +1,10 @@
+<!-- search-bar.component.html -->
+<div class="search-bar">
+    <input 
+      type="text" 
+      [(ngModel)]="searchQuery" 
+      placeholder="Rechercher des produits..."
+      (keyup.enter)="onSearch()"
+    >
+    <button (click)="onSearch()">🔍</button>
+  </div>

@@ -1,0 +1,106 @@
+<app-header></app-header>
+<div class="checkout-container">
+    <h2>Finalisation de la commande</h2>
+    
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
+      <div class="form-section">
+        <h3>Adresse de livraison</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="street_fr">Rue (Français)</label>
+            <input type="text" id="street_fr" formControlName="street_fr">
+            <div *ngIf="checkoutForm.get('street_fr')?.invalid && checkoutForm.get('street_fr')?.touched" class="error">
+              Ce champ est requis
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="street_ar">Rue (Arabe)</label>
+            <input type="text" id="street_ar" formControlName="street_ar">
+            <div *ngIf="checkoutForm.get('street_ar')?.invalid && checkoutForm.get('street_ar')?.touched" class="error">
+              Ce champ est requis
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city_fr">Ville (Français)</label>
+            <input type="text" id="city_fr" formControlName="city_fr">
+            <div *ngIf="checkoutForm.get('city_fr')?.invalid && checkoutForm.get('city_fr')?.touched" class="error">
+              Ce champ est requis
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="city_ar">Ville (Arabe)</label>
+            <input type="text" id="city_ar" formControlName="city_ar">
+            <div *ngIf="checkoutForm.get('city_ar')?.invalid && checkoutForm.get('city_ar')?.touched" class="error">
+              Ce champ est requis
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <label for="state_fr">Région (Français)</label>
+            <input type="text" id="state_fr" formControlName="state_fr">
+            <div *ngIf="checkoutForm.get('state_fr')?.invalid && checkoutForm.get('state_fr')?.touched" class="error">
+              Ce champ est requis
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="state_ar">Région (Arabe)</label>
+            <input type="text" id="state_ar" formControlName="state_ar">
+            <div *ngIf="checkoutForm.get('state_ar')?.invalid && checkoutForm.get('state_ar')?.touched" class="error">
+              Ce champ est requis
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <label for="zip_code">Code postal</label>
+            <input type="text" id="zip_code" formControlName="zip_code">
+            <div *ngIf="checkoutForm.get('zip_code')?.invalid && checkoutForm.get('zip_code')?.touched" class="error">
+              Code postal invalide (5 chiffres requis)
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Téléphone</label>
+            <input type="tel" id="phone" formControlName="phone">
+            <div *ngIf="checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched" class="error">
+              Numéro de téléphone invalide
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="country">Pays</label>
+          <input type="text" id="country" formControlName="country">
+          <div *ngIf="checkoutForm.get('country')?.invalid && checkoutForm.get('country')?.touched" class="error">
+            Ce champ est requis
+          </div>
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="button" (click)="router.navigate(['/cart'])" class="back-btn">
+          Retour au panier
+        </button>
+        <button type="submit" [disabled]="checkoutForm.invalid || isLoading" class="submit-btn">
+          <span *ngIf="!isLoading">Confirmer la commande</span>
+          <span *ngIf="isLoading">Traitement...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <app-footer></app-footer>

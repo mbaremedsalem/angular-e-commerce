@@ -1,0 +1,6 @@
+<!-- rating-stars.component.html -->
+<div class="rating-stars">
+    <span *ngFor="let _ of [].constructor(fullStars)">★</span>
+    <span *ngIf="hasHalfStar">½</span>
+    <span *ngFor="let _ of [].constructor(emptyStars)">☆</span>
+  </div>
