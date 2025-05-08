@@ -196,17 +196,6 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
-  // addToCart(): void {
-  //   if (this.product) {
-  //     const cartItem = {
-  //       product: this.product,
-  //       quantity: this.quantity,
-  //       size: this.selectedSize,
-  //       color: this.selectedColor
-  //     };
-  //     this.cartService.addToCart(cartItem);
-  //   }
-  // }
 
   addToCart(): void {
     if (this.product) {
@@ -257,9 +246,6 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
-  // get isAuthenticated(): boolean {
-  //   return this.authService.isLoggedIn$;
-  // }
   get isAuthenticated(): any {
     return this.authService.isLoggedIn$;
   }
