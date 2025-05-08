@@ -1,23 +1,4 @@
-<!-- product-card.component.html
-<div class="product-card">
-    <div class="image-container">
-      <img [src]="product.images[0].image" [alt]="product.name">
-    </div>
-    
-    <div class="product-info">
-      <h3>{{ product.name }}</h3>
-      <div class="price-section">
-        <span class="current-price">{{ product.price }} DH</span>
-        <span *ngIf="product.old_price !== product.price" class="old-price">
-          {{ product.old_price }} DH
-        </span>
-      </div>
-      <app-rating-stars [rating]="product.ratings"></app-rating-stars>
-    </div>
-  </div> -->
-
-
-  <div class="product-card" (mouseenter)="showActions = true" (mouseleave)="showActions = false">
+<div class="product-card" (mouseenter)="showActions = true" (mouseleave)="showActions = false">
     <div class="image-container">
       <img [src]="product.images[0].image" [alt]="product.name">
       <div class="hover-actions" *ngIf="showActions">
@@ -40,4 +21,5 @@
       </div>
       <app-rating-stars [rating]="product.ratings"></app-rating-stars>
     </div>
-  </div>
+    
+</div>
