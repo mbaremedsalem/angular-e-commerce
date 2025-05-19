@@ -11,12 +11,15 @@
                     <img [src]="banner.image" alt="Promotional banner" class="banner-image">
                     <div class="banner-overlay">
                         <div class="container">
-                            <h1>Bienvenue sur notre boutique</h1>
-                            <p>Découvrez nos meilleures offres</p>
+
+                            <h1 *ngIf="!(isLoggedIn$ | async)" > {{ 'BANNER.BIENVENU' | translate }}</h1>
+                            <P *ngIf="!(isLoggedIn$ | async)" > {{ 'BANNER.DECOUVRE' | translate }}</P>
+                            
                             <a 
                                 [routerLink]="banner.category ? ['/products', banner.category.id] : '/products'" 
-                                class="btn btn-primary">
-                                {{ banner.category ? 'Voir ' + banner.category.name : 'Voir les produits' }}
+                                class="btn btn-primary" *ngIf="!(isLoggedIn$ | async)" >
+                                {{ 'BANNER.VOIR_P' | translate }}
+
                             </a>
                         </div>
                     </div>
@@ -32,15 +35,15 @@
         <!-- Categories Section -->
         <section class="categories-section">
             <div class="container">
-                <h2>Nos catégories</h2>
+                <h2 *ngIf="!(isLoggedIn$ | async)" > {{ 'BANNER.NOSCATEGORY' | translate }}</h2>
                 <div class="categories-grid">
                     <a *ngFor="let category of featuredCategories" 
-                       [routerLink]="['/products', category.slug || category.id]"
+                       [routerLink]="['/products',category.id]"
                        class="category-card">
-                       <img [src]="category.image" [alt]="category.name" 
+                       <img [src]="category.image" [alt]="category.name_fr" 
                        onerror="this.src='assets/images/default-category.jpg'">
                        
-                      <h3>{{ category.name }}</h3>
+                      <h3>{{category.name_fr}}</h3>
                     </a>
                 </div>
             </div>

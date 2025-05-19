@@ -14,21 +14,41 @@ export interface Image {
     user: number;
   }
   
+  // export interface Product {
+  //   id: number;
+  //   name: string;
+  //   description: string;
+  //   price: string;
+  //   old_price: string;
+  //   brand: string;
+  //   category: number;
+  //   ratings: string;
+  //   stock: number;
+  //   user: number;
+  //   images: Image[];
+  //   reviews: Review[];
+  // }
+
+
   export interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: string;
-    old_price: string;
-    brand: string;
-    category: number;
-    ratings: string;
-    stock: number;
-    user: number;
-    images: Image[];
-    reviews: Review[];
-  }
-  
+  id: number;
+  name: string;
+  name_fr?: string;
+  name_ar?: string;
+  description: string;
+  description_fr?: string;
+  description_ar?: string;
+  price: string;
+  old_price: string;
+  brand: string;
+  category: number;
+  ratings: string;
+  stock: number;
+  is_active: boolean;
+  images: Image[];
+  [key: string]: any;
+}
+
   export interface ProductResponse {
     count: number;
     next: string | null;

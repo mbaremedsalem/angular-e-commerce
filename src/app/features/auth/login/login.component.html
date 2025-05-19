@@ -1,3 +1,4 @@
+<!-- <app-header></app-header>
 <div class="login-container">
     <div class="login-card">
       <h1>FURNITURE SHOP</h1>
@@ -45,4 +46,57 @@
         </button>
       </form>
     </div>
+  </div> -->
+
+
+
+  <app-header></app-header>
+<div class="login-container" [dir]="dir" >
+  
+  <div class="login-card">
+    <h1>{{ 'APP.TITLE' | translate }}</h1>
+    <h2>{{ 'LOGIN.TITLE' | translate }}</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">{{ 'LOGIN.USERNAME' | translate }}</label>
+        <input 
+          type="email" 
+          id="username" 
+          formControlName="username" 
+          [placeholder]="'LOGIN.REQUIRED' | translate"
+          [class.invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+        <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="error-message">
+          {{ 'LOGIN.EMAIL_ERROR' | translate }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">{{ 'LOGIN.PASSWORD' | translate }}</label>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password" 
+          [placeholder]="'LOGIN.REQUIRED' | translate"
+          [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+          {{ 'LOGIN.PASSWORD_ERROR' | translate }}
+        </div>
+      </div>
+
+      <div class="remember-me">
+        <input type="checkbox" id="rememberMe" formControlName="rememberMe">
+        <label for="rememberMe">{{ 'LOGIN.REMEMBER_ME' | translate }}</label>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="login-button" [disabled]="isLoading">
+        <span *ngIf="!isLoading">{{ 'LOGIN.BUTTON' | translate }}</span>
+        <span *ngIf="isLoading">{{ 'LOGIN.LOADING' | translate }}</span>
+      </button>
+    </form>
   </div>
+</div>

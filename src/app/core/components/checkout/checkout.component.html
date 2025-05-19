@@ -1,4 +1,4 @@
-<app-header></app-header>
+<!-- <app-header></app-header>
 <div class="checkout-container">
     <h2>Finalisation de la commande</h2>
     
@@ -103,4 +103,100 @@
     </form>
   </div>
 
-  <app-footer></app-footer>
+  <app-footer></app-footer> -->
+
+
+<app-header></app-header>
+<div class="checkout-container">
+    <h2>{{ 'CHECKOUT.TITLE' | translate }}</h2>
+    
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+  
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
+      <div class="form-section">
+        <h3>{{ 'CHECKOUT.SHIPPING_ADDRESS' | translate }}</h3>
+        
+        <!-- Champ Rue -->
+        <div class="form-row" *ngIf="currentLang === 'fr'">
+          <div class="form-group">
+            <label for="street_fr">{{ 'CHECKOUT.STREET' | translate }}</label>
+            <input type="text" id="street_fr" formControlName="street_fr">
+            <div *ngIf="checkoutForm.get('street_fr')?.invalid && checkoutForm.get('street_fr')?.touched" class="error">
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row" *ngIf="currentLang === 'ar'">
+          <div class="form-group">
+            <label for="street_ar">{{ 'CHECKOUT.STREET' | translate }}</label>
+            <input type="text" id="street_ar" formControlName="street_ar" dir="rtl">
+            <div *ngIf="checkoutForm.get('street_ar')?.invalid && checkoutForm.get('street_ar')?.touched" class="error" dir="rtl">
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Répétez le même pattern pour city et state -->
+        
+        <!-- Champ Code postal et Téléphone -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="zip_code">{{ 'CHECKOUT.ZIP_CODE' | translate }}</label>
+            <input type="text" id="zip_code" formControlName="zip_code" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+            <div *ngIf="checkoutForm.get('zip_code')?.invalid && checkoutForm.get('zip_code')?.touched" class="error" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+              {{ 'VALIDATION.ZIP_CODE' | translate }}
+            </div>
+          </div>
+          
+          <!-- <div class="form-group">
+            <label for="phone">{{ 'CHECKOUT.PHONE' | translate }}</label>
+            <input type="tel" id="phone" formControlName="phone" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+            <div *ngIf="checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched" class="error" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+              {{ 'VALIDATION.PHONE' | translate }}
+            </div>
+          </div> -->
+          
+        <div class="form-group phone-wrapper">
+          <label for="phone">{{ 'CHECKOUT.PHONE' | translate }}</label>
+          <div class="phone-input">
+            <span class="prefix">+222</span>
+            <input
+              type="tel"
+              id="phone"
+              formControlName="phone"
+              [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'"
+              placeholder="XXXXXXXX"
+            />
+          </div>
+          <div *ngIf="checkoutForm.get('phone')?.invalid && checkoutForm.get(
+            'phone')?.touched" class="error" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+            {{ 'VALIDATION.PHONE' | translate }}
+          </div>
+        </div>
+
+        </div>
+  
+        <div class="form-group">
+          <label for="country">{{ 'CHECKOUT.COUNTRY' | translate }}</label>
+          <input type="text" id="country" formControlName="country" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+          <div *ngIf="checkoutForm.get('country')?.invalid && checkoutForm.get('country')?.touched" class="error" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+            {{ 'VALIDATION.REQUIRED' | translate }}
+          </div>
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="button" (click)="router.navigate(['/cart'])" class="back-btn">
+          {{ 'CHECKOUT.BACK_TO_CART' | translate }}
+        </button>
+        <button type="submit" [disabled]="checkoutForm.invalid || isLoading" class="submit-btn">
+          <span *ngIf="!isLoading">{{ 'CHECKOUT.CONFIRM_ORDER' | translate }}</span>
+          <span *ngIf="isLoading">{{ 'CHECKOUT.PROCESSING' | translate }}</span>
+        </button>
+      </div>
+    </form>
+</div>
+<app-footer></app-footer>

@@ -1,129 +1,205 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f5f5f5;
-    padding: 2rem;
-  }
-  
-  .login-card {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      color: #2f3542;
-      font-weight: 700;
+  &[dir="rtl"] {
+    .login-card {
+      text-align: right;
     }
-  
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      color: #57606f;
-      font-weight: 500;
+    
+    .form-group {
+      text-align: right;
     }
-  }
-  
-  .form-group {
-    margin-bottom: 1.5rem;
-    text-align: left;
-  
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: #2f3542;
-    }
-  
-    input {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 1rem;
-  
-      &.invalid {
-        border-color: #ff4757;
-      }
-  
-      &:focus {
-        outline: none;
-        border-color: #1e90ff;
-        box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2);
+    
+    .remember-me {
+      flex-direction: row-reverse;
+      
+      input {
+        margin-right: 0;
+        margin-left: 0.5rem;
       }
     }
-  
-    .error-message {
-      color: #ff4757;
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
-    }
-  }
-  
-  .remember-me {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  
+    
     input {
-      margin-right: 0.5rem;
-    }
-  
-    label {
-      margin: 0;
-      font-weight: normal;
+      text-align: right;
     }
   }
-  
-  .alert {
-    padding: 0.8rem;
+}
+// 00000
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 1rem; // Réduit le padding sur mobile
+}
+
+.login-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin: 0 1rem; // Ajoute une marge latérale sur mobile
+
+  h1 {
+    font-size: clamp(1.5rem, 4vw, 1.8rem); // Taille de police responsive
+    margin-bottom: 0.5rem;
+    color: #2f3542;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: clamp(1.2rem, 3vw, 1.5rem); // Taille de police responsive
     margin-bottom: 1.5rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
-  
-    &.alert-danger {
-      background-color: #ffebee;
-      color: #ff4757;
-      border: 1px solid #ffcdd2;
-    }
+    color: #57606f;
+    font-weight: 500;
   }
-  
-  .login-button {
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+  text-align: left;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #2f3542;
+    font-size: 0.95rem;
+  }
+
+  input {
     width: 100%;
-    padding: 1rem;
-    background-color: #2f3542;
-    color: white;
-    border: none;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  
-    &:hover {
-      background-color: #57606f;
+    box-sizing: border-box; // Important pour le responsive
+
+    &.invalid {
+      border-color: #ff4757;
     }
-  
-    &:disabled {
-      background-color: #a4b0be;
-      cursor: not-allowed;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .login-card {
-      padding: 1.5rem;
+
+    &:focus {
+      outline: none;
+      border-color: #1e90ff;
+      box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2);
     }
   }
 
+  .error-message {
+    color: #ff4757;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+}
 
+.remember-me {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
 
+  input {
+    margin-right: 0.5rem;
+    width: auto; // Reset pour les checkbox
+  }
 
-  
+  label {
+    margin: 0;
+    font-weight: normal;
+  }
+}
+
+.alert {
+  padding: 0.75rem;
+  margin-bottom: 1.25rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+
+  &.alert-danger {
+    background-color: #ffebee;
+    color: #ff4757;
+    border: 1px solid #ffcdd2;
+  }
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #2f3542;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #57606f;
+    transform: translateY(-1px); // Effet subtil au survol
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background-color: #a4b0be;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+/* Media Queries pour différents breakpoints */
+@media (max-width: 768px) {
+  .login-card {
+    padding: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 0.5rem;
+    align-items: flex-start; // Alignement en haut sur mobile
+    padding-top: 2rem; // Espace en haut sur mobile
+  }
+
+  .login-card {
+    padding: 1.5rem;
+    margin-top: 1rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1.25rem;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+
+    input {
+      padding: 0.7rem;
+    }
+  }
+
+  .login-button {
+    padding: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-card {
+    padding: 1.25rem;
+  }
+
+  .remember-me {
+    font-size: 0.85rem;
+  }
+}

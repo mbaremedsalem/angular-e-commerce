@@ -1,0 +1,80 @@
+{
+    "HEADER": {
+      "SEARCH_PLACEHOLDER": "Rechercher des produits...",
+      "MY_ACCOUNT": "Mon Compte",
+      "LOGIN": "Connexion",
+      "REGISTER": "S'inscrire",
+      "PROFILE": "Profil",
+      "LOGOUT": "Déconnexion",
+      "CART": "Panier"
+    },
+
+    "BANNER": {
+        "BIENVENU": "Bienvenue sur notre boutique",
+        "DECOUVRE": "Découvrez nos meilleures offres",
+        "VOIR": "Voir",
+        "VOIR_P": "Voir les produits",
+        "NOSCATEGORY":"Nos catégories"
+      },
+    
+    "PRODUCT": {
+
+      "ERROR_LOADING": "Échec du chargement des produits. Veuillez réessayer plus tard.",
+      "ADDED_TO_CART": "{{name}} ajouté au panier",
+      "CLOSE": "Fermer",
+      "BRAND": "Marque",
+      "IN_STOCK": "En stock ({{count}} disponibles)",
+      "OUT_OF_STOCK": "Rupture de stock",
+      "SIZE": "Taille",
+      "COLOR": "Couleur",
+      "QUANTITY": "Quantité",
+      "ADD_TO_CART": "Ajouter au panier",
+      "REVIEWS": "Avis clients",
+      "NO_REVIEWS": "Aucun avis pour le moment. Soyez le premier !",
+      "SUBMIT_REVIEW": "Donnez votre avis",
+      "REVIEW_SUCCESS": "Merci pour votre avis !",
+      "YOUR_RATING": "Votre note",
+      "YOUR_REVIEW": "Votre avis",
+      "SUBMIT": "Soumettre",
+      "SUBMITTING": "Envoi en cours...",
+      "LOGIN_TO_REVIEW_1": "Veuillez vous",
+      "LOGIN": "connecter",
+      "LOGIN_TO_REVIEW_2": "pour donner votre avis"
+    },
+    "CHECKOUT": {
+      "TITLE": "Finalisation de la commande",
+      "SHIPPING_ADDRESS": "Adresse de livraison",
+      "STREET": "Rue",
+      "CITY": "Ville",
+      "STATE": "Région",
+      "ZIP_CODE": "Code postal",
+      "PHONE": "Téléphone",
+      "COUNTRY": "Pays",
+      "BACK_TO_CART": "Retour au panier",
+      "CONFIRM_ORDER": "Confirmer la commande",
+      "PROCESSING": "Traitement...",
+      "ERROR": "Une erreur est survenue lors de la commande. Veuillez réessayer."
+    },
+    "VALIDATION": {
+      "REQUIRED": "Ce champ est requis",
+      "ZIP_CODE": "Code postal invalide (5 chiffres requis)",
+      "PHONE": "Numéro de téléphone invalide"
+    },
+    
+  "APP": {
+    "TITLE": "BOUTIQUE DE MEUBLES"
+  },
+  "LOGIN": {
+    "TITLE": "CONNEXION",
+    "USERNAME": "Nom d'utilisateur ou email",
+    "PASSWORD": "Mot de passe",
+    "REMEMBER_ME": "Se souvenir de moi",
+    "REQUIRED": "Requis",
+    "EMAIL_ERROR": "Veuillez entrer une adresse email valide",
+    "PASSWORD_ERROR": "Le mot de passe est requis",
+    "BUTTON": "SE CONNECTER",
+    "LOADING": "CONNEXION EN COURS...",
+    "ERROR": "Échec de la connexion. Veuillez vérifier vos identifiants."
+  }
+
+}

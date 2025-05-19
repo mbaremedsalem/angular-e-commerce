@@ -1,3 +1,36 @@
+.form-group {
+  width: 100%;
+}
+
+.phone-wrapper .phone-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%; /* S'assure que le conteneur de l'input prend toute la largeur */
+}
+
+.phone-wrapper .prefix {
+  background-color: #f0f0f0;
+  padding: 0 10px;
+  border-right: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 2.5;
+  white-space: nowrap;
+}
+
+.phone-wrapper input[type="tel"] {
+  border: none;
+  flex: 1 1 auto;
+  width: 100%; /* Important pour forcer l'expansion */
+  padding: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+
+// ========
 .checkout-container {
     max-width: 1000px;
     margin: 2rem auto;

@@ -4,7 +4,9 @@ import { Category } from 'src/app/core/models/category.model';
 import { ProductService } from 'src/app/core/services/product.service';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { BannerService } from 'src/app/core/services/banner.service';
-import { interval, Subscription } from 'rxjs';
+import { interval, Observable, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -18,15 +20,28 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentBannerIndex = 0;
   homeProductsLoading = true;
   bannersLoading = true;
+  isLoggedIn$: Observable<boolean> | undefined;
+  currentLang: string= 'fr';
+  supportedLangs = [
+    { code: 'fr', name: 'Français' },
+    { code: 'en', name: 'English' },
+    { code: 'ar', name: 'العربية' }
+  ];
   private bannerInterval!: Subscription;
 
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
-    private bannerService: BannerService
-  ) {}
+    private bannerService: BannerService,
+    private authService: AuthService,
+    private translate: TranslateService
+  ) {
+    this.isLoggedIn$ = this.authService.isLoggedIn$;
+    this.currentLang = this.translate.currentLang || 'fr';
+  }
 
   ngOnInit(): void {
+    this.currentLang = this.translate.currentLang;
     this.loadFeaturedProducts();
     this.loadFeaturedCategories();
     this.loadBanners();
@@ -103,5 +118,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.bannerInterval.unsubscribe();
       this.startBannerRotation();
     }
+  }
+
+  switchLanguage(lang: string): void {
+    this.translate.use(lang);
+    this.currentLang = lang;
+    localStorage.setItem('userLanguage', lang);
+  
+    // ✅ Mettre à jour la direction
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }
 }

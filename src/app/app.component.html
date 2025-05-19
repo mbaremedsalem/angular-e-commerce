@@ -1,2 +1,12 @@
+<ng-container *ngIf="translationsReady; else loading">
+  <router-outlet></router-outlet> <!-- Le contenu de l'application est chargé ici -->
+</ng-container>
 
-<router-outlet></router-outlet>
+<ng-template #loading>
+  <!-- Loader ou autre contenu pendant le chargement des traductions -->
+  <div class="loading">...جار التحميل</div>
+</ng-template>
+
+
+  
+  

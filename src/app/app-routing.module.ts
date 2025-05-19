@@ -9,11 +9,13 @@ import { CheckoutComponent } from './core/components/checkout/checkout.component
 import { OrderConfirmationComponent } from './core/components/order-confirmation/order-confirmation.component';
 import { OrderComponent } from './core/components/order/order.component';
 import { OrderDetailsComponent } from './core/components/order-details/order-details.component';
+import { CategoryProductsComponent } from './core/components/category-products/category-products.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'products', component: ProductListComponent },
+  
   { 
     path: 'profile', 
     component: ProfileComponent,
@@ -23,7 +25,7 @@ const routes: Routes = [
   { path: 'order-confirmation/:id', component: OrderConfirmationComponent },
   { path: 'orders', component: OrderComponent },
   { path: 'orders/:id', component: OrderDetailsComponent },
-  
+  { path: 'category/:id', component: CategoryProductsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule) },
   
@@ -43,7 +45,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{ onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

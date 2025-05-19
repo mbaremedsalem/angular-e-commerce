@@ -1,0 +1,36 @@
+{
+    "HEADER": {
+      "SEARCH_PLACEHOLDER": "Search products...",
+      "MY_ACCOUNT": "My Account",
+      "LOGIN": "Login",
+      "REGISTER": "Register",
+      "PROFILE": "Profile",
+      "LOGOUT": "Logout",
+      "CART": "Cart"
+    },
+    "BANNER": {
+        "BIENVENU": "Welcome to our store",
+        "DECOUVRE": "Discover our best offers",
+        "VOIR": "See",
+        "VOIR_P": "See the products",
+        "NOSCATEGORY": "Our categories"
+    },
+
+  "APP": {
+    "TITLE": "FURNITURE SHOP"
+  },
+  "LOGIN": {
+    "TITLE": "LOGIN",
+    "USERNAME": "Username or email address",
+    "PASSWORD": "Password",
+    "REMEMBER_ME": "Remember me",
+    "REQUIRED": "Required",
+    "EMAIL_ERROR": "Please enter a valid email address",
+    "PASSWORD_ERROR": "Password is required",
+    "BUTTON": "LOG IN",
+    "LOADING": "LOGGING IN...",
+    "ERROR": "Login failed. Please check your credentials."
+  }
+
+      
+  }

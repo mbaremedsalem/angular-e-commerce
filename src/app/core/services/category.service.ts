@@ -114,9 +114,9 @@ import { Category } from '../models/category.model';
 })
 export class CategoryService {
   private apiUrl = `${environment.domain}/api/categories`;
-
   constructor(private http: HttpClient) {}
 
+  
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl).pipe(
       map(categories => this.transformCategories(categories)),
@@ -133,17 +133,11 @@ export class CategoryService {
   private transformCategories(categories: any[]): Category[] {
     return categories.map(category => ({
       id: category.id,
-      name: category.name,
-      slug: this.createSlug(category.name),
-      image: this.fixImageUrl(category.image) // Correction des URLs d'images
+      name_fr: category.name_fr,
+      name_ar: category.name_ar,
+      image: this.fixImageUrl(category.image), // Corrige l'URL d'image
+      created_at: category.created_at // ✅ Ajout du champ manquant
     }));
-  }
-
-  private createSlug(name: string): string {
-    return name.toLowerCase()
-      .replace(/é|è|ê/g, 'e')
-      .replace(/ /g, '-')
-      .replace(/[^\w-]+/g, '');
   }
 
   private fixImageUrl(imageUrl: string): string {

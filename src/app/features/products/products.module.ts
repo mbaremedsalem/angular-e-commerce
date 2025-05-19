@@ -32,6 +32,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CoreModule } from 'src/app/core/core.module';
 import { ProductsComponent } from './products.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpLoaderFactory } from 'src/app/app.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,14 @@ import { ProductsComponent } from './products.component';
     RouterModule,
     CoreModule, // Ajoutez CoreModule
     SharedModule, // Ajoutez SharedModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        })
   ]
 })
 export class ProductsModule { }

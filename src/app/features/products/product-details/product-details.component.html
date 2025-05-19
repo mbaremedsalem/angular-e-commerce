@@ -1,3 +1,10 @@
+
+
+
+<!-- started -->
+
+<app-header></app-header>
+
 <div class="product-detail-container">
   <div *ngIf="isLoading" class="loading-spinner">
     <mat-spinner></mat-spinner>
@@ -11,7 +18,7 @@
     <!-- Gallery Produit -->
     <div class="product-gallery">
       <div class="main-image">
-        <img [src]="product.images[activeImageIndex].image" [alt]="product.name">
+        <img [src]="product.images[activeImageIndex].image" [alt]="getTranslatedText('name')">
       </div>
       <div class="thumbnail-container">
         <div *ngFor="let image of product.images; let i = index" 
@@ -25,8 +32,8 @@
 
     <!-- Détails Produit -->
     <div class="product-info">
-      <h1>{{ product.name }}</h1>
-      <p class="brand">Marque: {{ product.brand }}</p>
+      <h1>{{ getTranslatedText('name') }}</h1>
+      <p class="brand">{{ 'PRODUCT.BRAND' | translate }}: {{ product.brand }}</p>
       
       <div class="price-section">
         <span class="current-price">{{ product.price }} MRU</span>
@@ -38,18 +45,21 @@
           <span *ngFor="let star of [1,2,3,4,5]" 
                 [class.filled]="star <= numericRating">★</span>
         </div>
-        <span class="rating-value">{{ numericRating | number:'1.1-1' }} ({{ product.reviews.length }} avis)</span>
+        <span class="rating-value">
+          {{ numericRating | number:'1.1-1' }} 
+          ({{ product.reviews.length }} {{ 'PRODUCT.REVIEWS_COUNT' | translate }})
+        </span>
       </div>
 
       <div class="stock-status">
         <span [class.in-stock]="product.stock > 0" [class.out-of-stock]="product.stock <= 0">
-          {{ product.stock > 0 ? 'En stock (' + product.stock + ' disponibles)' : 'Rupture de stock' }}
+          {{ getTranslatedStockMessage() }}
         </span>
       </div>
 
       <!-- Sélection de taille -->
       <div class="size-selector" *ngIf="product.sizes.length > 0">
-        <h3>Taille</h3>
+        <h3>{{ 'PRODUCT.SIZE' | translate }}</h3>
         <div class="size-options">
           <button *ngFor="let size of product.sizes" 
                   [class.selected]="selectedSize === size.code"
@@ -61,7 +71,7 @@
 
       <!-- Sélection de couleur -->
       <div class="color-selector" *ngIf="product.colors.length > 0">
-        <h3>Couleur</h3>
+        <h3>{{ 'PRODUCT.COLOR' | translate }}</h3>
         <div class="color-options">
           <button *ngFor="let color of product.colors" 
                   [style.background-color]="color.hex_code"
@@ -74,7 +84,7 @@
 
       <!-- Quantité -->
       <div class="quantity-selector">
-        <h3>Quantité</h3>
+        <h3>{{ 'PRODUCT.QUANTITY' | translate }}</h3>
         <div class="quantity-control">
           <button (click)="decrementQuantity()">-</button>
           <span>{{ quantity }}</span>
@@ -82,21 +92,21 @@
         </div>
       </div>
 
-      <p class="description">{{ product.description }}</p>
+      <p class="description">{{ getTranslatedText('description') }}</p>
 
       <button (click)="addToCart()" class="add-to-cart" 
               [disabled]="product.stock <= 0 || !selectedSize || !selectedColor">
-        Ajouter au panier
+        {{ 'PRODUCT.ADD_TO_CART' | translate }}
       </button>
     </div>
   </div>
 
   <!-- Section Avis -->
   <div *ngIf="product" class="reviews-section">
-    <h2>Avis clients</h2>
+    <h2>{{ 'PRODUCT.REVIEWS' | translate }}</h2>
     
     <div *ngIf="product.reviews.length === 0" class="no-reviews">
-      <p>Aucun avis pour le moment. Soyez le premier à donner votre avis !</p>
+      <p>{{ 'PRODUCT.NO_REVIEWS' | translate }}</p>
     </div>
 
     <div *ngFor="let review of product.reviews" class="review-card">
@@ -107,20 +117,20 @@
         <span class="review-date">{{ review.createedAt | date:'dd/MM/yyyy' }}</span>
       </div>
       <p class="review-comment">{{ review.comment }}</p>
-      <p class="review-author">Par {{ review.user_name || 'Anonyme' }}</p>
+      <p class="review-author">{{ 'PRODUCT.BY' | translate }} {{ review.user_name || 'Anonyme' }}</p>
     </div>
 
     <!-- Formulaire d'avis -->
     <div *ngIf="isAuthenticated" class="review-form-container">
-      <h3>Donnez votre avis</h3>
+      <h3>{{ 'PRODUCT.SUBMIT_REVIEW' | translate }}</h3>
       
       <div *ngIf="reviewSuccess" class="success-message">
-        Merci pour votre avis !
+        {{ 'PRODUCT.REVIEW_SUCCESS' | translate }}
       </div>
       
       <form [formGroup]="reviewForm" (ngSubmit)="submitReview()" class="review-form">
         <div class="form-group">
-          <label>Votre note</label>
+          <label>{{ 'PRODUCT.YOUR_RATING' | translate }}</label>
           <div class="rating-input">
             <span *ngFor="let star of [1,2,3,4,5]" 
                   (click)="reviewForm.get('rating')?.setValue(star)"
@@ -128,22 +138,22 @@
           </div>
           <div *ngIf="reviewForm.get('rating')?.invalid && reviewForm.get('rating')?.touched" 
                class="error-message">
-            Veuillez sélectionner une note
+            {{ 'PRODUCT.RATING_REQUIRED' | translate }}
           </div>
         </div>
 
         <div class="form-group">
-          <label for="comment">Votre avis</label>
+          <label for="comment">{{ 'PRODUCT.YOUR_REVIEW' | translate }}</label>
           <textarea id="comment" formControlName="comment" rows="5"></textarea>
           <div *ngIf="reviewForm.get('comment')?.invalid && reviewForm.get('comment')?.touched" 
                class="error-message">
-            Veuillez écrire un avis (minimum 10 caractères)
+            {{ 'PRODUCT.REVIEW_REQUIRED' | translate }}
           </div>
         </div>
 
         <button type="submit" class="submit-review" [disabled]="isSubmittingReview || reviewForm.invalid">
-          <span *ngIf="!isSubmittingReview">Soumettre l'avis</span>
-          <span *ngIf="isSubmittingReview">Envoi en cours...</span>
+          <span *ngIf="!isSubmittingReview">{{ 'PRODUCT.SUBMIT' | translate }}</span>
+          <span *ngIf="isSubmittingReview">{{ 'PRODUCT.SUBMITTING' | translate }}</span>
         </button>
 
         <div *ngIf="reviewError" class="error-message">
@@ -153,7 +163,11 @@
     </div>
 
     <div *ngIf="!isAuthenticated" class="login-prompt">
-      <p>Veuillez vous <a routerLink="/login">connecter</a> pour donner votre avis.</p>
+      <p>
+        {{ 'PRODUCT.LOGIN_TO_REVIEW_1' | translate }}
+        <a routerLink="/login">{{ 'PRODUCT.LOGIN' | translate }}</a>
+        {{ 'PRODUCT.LOGIN_TO_REVIEW_2' | translate }}
+      </p>
     </div>
   </div>
 </div>
