@@ -6,7 +6,8 @@
       "REGISTER": "Register",
       "PROFILE": "Profile",
       "LOGOUT": "Logout",
-      "CART": "Cart"
+      "CART": "Cart",
+      "MY_ORDERS": "My Orders"
     },
     "BANNER": {
         "BIENVENU": "Welcome to our store",
@@ -30,6 +31,26 @@
     "BUTTON": "LOG IN",
     "LOADING": "LOGGING IN...",
     "ERROR": "Login failed. Please check your credentials."
+  },
+
+  "FOOTER": {
+    "ABOUT_TEXT": "Our store offers quality products for your interior.",
+    "LINKS_TITLE": "LINKS",
+    "STORY": "Story",
+    "CONTACT": "Contact",
+    "TRACK_ORDER": "Track Order",
+    "HELP": "Help",
+    "CATEGORIES_TITLE": "CATEGORIES",
+    "SUBSCRIBE_TITLE": "SUBSCRIBE",
+    "EMAIL_PLACEHOLDER": "Your email address...",
+    "SUBSCRIBE_BUTTON": "SUBSCRIBE",
+    "COPYRIGHT": "My E-commerce. All rights reserved."
+  },
+  "CATEGORIES": {
+    "BEDROOM": "Bedroom",
+    "DECOR": "Decor",
+    "LIVING_ROOM": "Living Room",
+    "OFFICE": "Office"
   }
 
       

@@ -6,7 +6,8 @@
       "REGISTER": "S'inscrire",
       "PROFILE": "Profil",
       "LOGOUT": "Déconnexion",
-      "CART": "Panier"
+      "CART": "Panier",
+      "MY_ORDERS": "Mes Commandes"
     },
 
     "BANNER": {
@@ -75,6 +76,27 @@
     "BUTTON": "SE CONNECTER",
     "LOADING": "CONNEXION EN COURS...",
     "ERROR": "Échec de la connexion. Veuillez vérifier vos identifiants."
+  },
+  
+  "FOOTER": {
+    "ABOUT_TEXT": "Notre boutique vous propose des produits de qualité pour votre intérieur.",
+    "LINKS_TITLE": "LIENS",
+    "STORY": "Histoire",
+    "CONTACT": "Contact",
+    "TRACK_ORDER": "Suivi commande",
+    "HELP": "Aide",
+    "CATEGORIES_TITLE": "CATÉGORIES",
+    "SUBSCRIBE_TITLE": "ABONNEMENT",
+    "EMAIL_PLACEHOLDER": "Votre adresse email...",
+    "SUBSCRIBE_BUTTON": "S'ABONNER",
+    "COPYRIGHT": "Mon E-commerce. Tous droits réservés."
+  },
+  "CATEGORIES": {
+    "BEDROOM": "Chambre",
+    "DECOR": "Décoration",
+    "LIVING_ROOM": "Salon",
+    "OFFICE": "Bureau"
   }
+
 
 }

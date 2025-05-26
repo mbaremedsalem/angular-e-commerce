@@ -31,7 +31,7 @@
   
         <div class="order-items-preview">
           <div *ngFor="let item of order.orderItems.slice(0, 2)" class="order-item">
-            <img [src]="'https://192.168.0.207:8000/'+item.image" [alt]="item.name" class="item-image" (error)="handleImageError($event)">
+            <img [src]="apiUrl+'/'+item.image" [alt]="item.name" class="item-image" (error)="handleImageError($event)">
             <div class="item-details">
               <h4>{{ item.name }}</h4>
               <p>{{ item.quantity }} × {{ item.price }} MRU</p>

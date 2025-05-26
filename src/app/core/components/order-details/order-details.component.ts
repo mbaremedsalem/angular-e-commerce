@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService, Order, SingleOrderResponse, OrderItem } from '../../services/order.service';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-order-details',
@@ -12,7 +13,8 @@ export class OrderDetailsComponent implements OnInit {
   loading = true;
   error: string | null = null;
   activeLanguage: 'fr' | 'ar' = 'fr';
-
+  public apiUrl = `${environment.domain}`;
+  
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService

@@ -6,7 +6,7 @@
         <a routerLink="/">
           <img src="/assets/images/hero-bg.jpg" alt="Logo" width="60px" class="logo-image">
         </a>
-      </div>
+        </div>
 
       <div class="search-bar">
         <input 
@@ -28,7 +28,7 @@
         </select>
       </div>
 
-      <div class="header-actions">
+      <!-- <div class="header-actions">
         <div class="account" (click)="toggleMenu()">
           <i class="fas fa-user"></i>
           <span *ngIf="isLoggedIn$ | async">{{ 'HEADER.MY_ACCOUNT' | translate }}</span>
@@ -46,6 +46,43 @@
           <span class="cart-count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
         </a>
 
+        <a routerLink="/orders" class="orders" [title]="'HEADER.MY_ORDERS' | translate">
+          <i class="fas fa-clipboard-list"></i>
+          <span class="orders-label">{{ 'HEADER.MY_ORDERS' | translate }}</span>
+        </a>
+
+        <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div> -->
+      <div class="header-actions">
+        <!-- My Orders - Version améliorée -->
+        <a routerLink="/orders" class="orders" [title]="'HEADER.MY_ORDERS' | translate">
+          <i class="fas fa-clipboard-list"></i>
+          <span class="orders-label">{{ 'HEADER.MY_ORDERS' | translate }}</span>
+        </a>
+
+        <!-- Account -->
+        <div class="account" (click)="toggleMenu()">
+          <i class="fas fa-user"></i>
+          <span *ngIf="isLoggedIn$ | async">{{ 'HEADER.MY_ACCOUNT' | translate }}</span>
+          <span *ngIf="!(isLoggedIn$ | async)">{{ 'HEADER.LOGIN' | translate }}</span>
+          <!-- ... dropdown menu ... -->
+          <div class="dropdown-menu" [class.open]="isMenuOpen">
+            <a *ngIf="!(isLoggedIn$ | async)" routerLink="/login">{{ 'HEADER.LOGIN' | translate }}</a>
+            <a *ngIf="!(isLoggedIn$ | async)" routerLink="/register">{{ 'HEADER.REGISTER' | translate }}</a>
+            <a *ngIf="isLoggedIn$ | async" routerLink="/profile" (click)="isMenuOpen = false">{{ 'HEADER.PROFILE' | translate }}</a>
+            <a *ngIf="isLoggedIn$ | async" (click)="logout()">{{ 'HEADER.LOGOUT' | translate }}</a>
+          </div>
+        </div>
+
+        <!-- Cart -->
+        <a routerLink="/cart" class="cart">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+        </a>
+
+        <!-- Mobile menu toggle -->
         <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
           <i class="fas fa-bars"></i>
         </button>

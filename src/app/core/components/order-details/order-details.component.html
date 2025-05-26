@@ -43,7 +43,7 @@
             <h3>Articles</h3>
             <div class="order-items">
               <div *ngFor="let item of order.orderItems" class="order-item">
-                <img [src]="'https://192.168.0.207:8000/' + item.image" [alt]="item.name" 
+                <img [src]="apiUrl+'/'+ item.image" [alt]="item.name" 
                      class="item-image" (error)="handleImageError($event)">
                 <div class="item-details">
                   <h4>{{ getItemName(item) }}</h4>

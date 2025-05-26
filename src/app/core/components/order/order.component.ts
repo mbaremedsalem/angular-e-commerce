@@ -33,6 +33,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Order, OrderResponse, OrderService} from '../../services/order.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/app/environments/environment';
 
 
 @Component({
@@ -46,7 +47,8 @@ export class OrderComponent implements OnInit  {
   error: string | null = null;
   currentPage = 1;
   totalPages = 1;
-
+  public apiUrl = `${environment.domain}`;
+  
   constructor(
     private orderService: OrderService,
     private router: Router

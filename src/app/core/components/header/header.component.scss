@@ -1,9 +1,70 @@
 // ----------
 
 @import '~font-awesome/css/font-awesome.css';
+/* Style pour My Orders */
+.header-actions .orders {
+ 
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 4px;
+  position: relative;
+}
 
+.header-actions .orders:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--primary-color);
+}
+
+.header-actions .orders i {
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+.header-actions .orders-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Pour les écrans mobiles - cacher le texte */
+@media (max-width: 768px) {
+  .header-actions .orders-label {
+    display: none;
+  }
+  .header-actions .orders {
+    margin-right: 15px;
+    padding: 8px;
+  }
+  .header-actions .orders i {
+    margin-right: 0;
+  }
+}
+
+/* Style cohérent avec les autres éléments */
+.header-actions a, .header-actions div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  
+}
+
+.header-actions .account, .header-actions .cart {
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.header-actions .account:hover, .header-actions .cart:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 /* Base Styles */
 .header {
+  // background-color: red;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
@@ -11,11 +72,12 @@
   z-index: 1000;
 
   .container {
+    // background-color: #ff5722;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 15px;
-    max-width: 1200px;
+    max-width: 1200px;  
     margin: 0 auto;
   }
 }
@@ -493,7 +555,14 @@
 
 @media (max-width: 768px) {
   .header-top .container {
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
+    // grid-template-columns: 2;
+    display:flex;
+    flex-direction: column;
+    // display: flex;
+    align-items: center;
+    // justify-content: center; 
+     
   }
 
   .search-bar {
@@ -504,12 +573,18 @@
   }
 
   .header-actions {
+    justify-content: space-between;
+    align-items: center;
+    // background-color: green;
     .account span, .cart span:not(.cart-count) {
       display: none;
     }
 
     .mobile-menu-toggle {
       display: block;
+      // display: flex; 
+      // justify-content: space-between;
+      // align-items: center;
     }
   }
 

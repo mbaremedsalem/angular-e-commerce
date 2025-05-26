@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../services/order.service';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -12,6 +13,7 @@ export class OrderConfirmationComponent implements OnInit {
   order: any;
   isLoading = true;
   error: string | null = null;
+  public apiUrl = `${environment.domain}`
 
   constructor(
     private route: ActivatedRoute,

@@ -105,9 +105,8 @@
 
   <app-footer></app-footer> -->
 
-
 <app-header></app-header>
-<div class="checkout-container">
+<div class="checkout-container" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
     <h2>{{ 'CHECKOUT.TITLE' | translate }}</h2>
     
     <div *ngIf="error" class="error-message">
@@ -119,19 +118,19 @@
         <h3>{{ 'CHECKOUT.SHIPPING_ADDRESS' | translate }}</h3>
         
         <!-- Champ Rue -->
-        <div class="form-row" *ngIf="currentLang === 'fr'">
+        <div class="form-row">
           <div class="form-group">
-            <label for="street_fr">{{ 'CHECKOUT.STREET' | translate }}</label>
-            <input type="text" id="street_fr" formControlName="street_fr">
-            <div *ngIf="checkoutForm.get('street_fr')?.invalid && checkoutForm.get('street_fr')?.touched" class="error">
+            <label for="street_fr">{{ 'CHECKOUT.STREET' | translate }} (Français)</label>
+            <input type="text" id="street_fr" formControlName="street_fr" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+            <div *ngIf="checkoutForm.get('street_fr')?.invalid && checkoutForm.get('street_fr')?.touched" class="error" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
               {{ 'VALIDATION.REQUIRED' | translate }}
             </div>
           </div>
         </div>
 
-        <div class="form-row" *ngIf="currentLang === 'ar'">
+        <div class="form-row">
           <div class="form-group">
-            <label for="street_ar">{{ 'CHECKOUT.STREET' | translate }}</label>
+            <label for="street_ar">{{ 'CHECKOUT.STREET' | translate }} (العربية)</label>
             <input type="text" id="street_ar" formControlName="street_ar" dir="rtl">
             <div *ngIf="checkoutForm.get('street_ar')?.invalid && checkoutForm.get('street_ar')?.touched" class="error" dir="rtl">
               {{ 'VALIDATION.REQUIRED' | translate }}
@@ -139,9 +138,49 @@
           </div>
         </div>
 
-        <!-- Répétez le même pattern pour city et state -->
-        
-        <!-- Champ Code postal et Téléphone -->
+        <!-- Ville -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city_fr">{{ 'CHECKOUT.CITY' | translate }} (Français)</label>
+            <input type="text" id="city_fr" formControlName="city_fr" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+            <div *ngIf="checkoutForm.get('city_fr')?.invalid && checkoutForm.get('city_fr')?.touched" class="error" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city_ar">{{ 'CHECKOUT.CITY' | translate }} (العربية)</label>
+            <input type="text" id="city_ar" formControlName="city_ar" dir="rtl">
+            <div *ngIf="checkoutForm.get('city_ar')?.invalid && checkoutForm.get('city_ar')?.touched" class="error" dir="rtl">
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Région -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="state_fr">{{ 'CHECKOUT.STATE' | translate }} (Français)</label>
+            <input type="text" id="state_fr" formControlName="state_fr" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+            <div *ngIf="checkoutForm.get('state_fr')?.invalid && checkoutForm.get('state_fr')?.touched" class="error" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="state_ar">{{ 'CHECKOUT.STATE' | translate }} (العربية)</label>
+            <input type="text" id="state_ar" formControlName="state_ar" dir="rtl">
+            <div *ngIf="checkoutForm.get('state_ar')?.invalid && checkoutForm.get('state_ar')?.touched" class="error" dir="rtl">
+              {{ 'VALIDATION.REQUIRED' | translate }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Code postal et Téléphone -->
         <div class="form-row">
           <div class="form-group">
             <label for="zip_code">{{ 'CHECKOUT.ZIP_CODE' | translate }}</label>
@@ -151,32 +190,22 @@
             </div>
           </div>
           
-          <!-- <div class="form-group">
+          <div class="form-group phone-wrapper">
             <label for="phone">{{ 'CHECKOUT.PHONE' | translate }}</label>
-            <input type="tel" id="phone" formControlName="phone" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
+            <div class="phone-input">
+              <span class="prefix">+222</span>
+              <input
+                type="tel"
+                id="phone"
+                formControlName="phone"
+                [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'"
+                placeholder="XXXXXXXX"
+              />
+            </div>
             <div *ngIf="checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched" class="error" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
               {{ 'VALIDATION.PHONE' | translate }}
             </div>
-          </div> -->
-          
-        <div class="form-group phone-wrapper">
-          <label for="phone">{{ 'CHECKOUT.PHONE' | translate }}</label>
-          <div class="phone-input">
-            <span class="prefix">+222</span>
-            <input
-              type="tel"
-              id="phone"
-              formControlName="phone"
-              [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'"
-              placeholder="XXXXXXXX"
-            />
           </div>
-          <div *ngIf="checkoutForm.get('phone')?.invalid && checkoutForm.get(
-            'phone')?.touched" class="error" [dir]="currentLang === 'ar' ? 'rtl' : 'ltr'">
-            {{ 'VALIDATION.PHONE' | translate }}
-          </div>
-        </div>
-
         </div>
   
         <div class="form-group">
