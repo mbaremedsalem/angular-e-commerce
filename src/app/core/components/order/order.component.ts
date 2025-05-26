@@ -1,52 +1,20 @@
-// // orders.component.ts
-// import { Component, OnInit } from '@angular/core';
-// import { OrderService } from '../../services/order.service';
-
-
-// @Component({
-//   selector: 'app-orders',
-//   templateUrl: './order.component.html',
-//   styleUrls: ['./order.component.scss']
-// })
-// export class OrderComponent implements OnInit {
-//   orders: any[] = [];
-//   loading = true;
-
-//   constructor(private orderService: OrderService) {}
-
-//   ngOnInit() {
-//     this.orderService.getOrders().subscribe(
-//       (orders) => {
-//         // this.orders = orders!;
-//         this.loading = false;
-//       },
-//       (error) => {
-//         this.loading = false;
-//         console.error('Error fetching orders:', error);
-//       }
-//     );
-//   }
-// }
-
-
-// orders.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Order, OrderResponse, OrderService} from '../../services/order.service';
+import { Order, OrderResponse, OrderService } from '../../services/order.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/app/environments/environment';
-
 
 @Component({
   selector: 'app-orders',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
-export class OrderComponent implements OnInit  {
+export class OrderComponent implements OnInit {
   orders: Order[] = [];
   loading = true;
   error: string | null = null;
+  nextPage: string | null = null;
+  previousPage: string | null = null;
   currentPage = 1;
-  totalPages = 1;
   public apiUrl = `${environment.domain}`;
   
   constructor(
@@ -58,16 +26,24 @@ export class OrderComponent implements OnInit  {
     this.loadOrders();
   }
 
-  loadOrders(page = 1): void {
+  loadOrders(url?: string): void {
     this.loading = true;
     this.error = null;
-    this.currentPage = page;
 
-    this.orderService.getOrders().subscribe({
+    this.orderService.getOrders(url).subscribe({
       next: (response: OrderResponse) => {
         this.orders = response.results;
-        // Calculate total pages based on count (assuming 10 items per page)
-        this.totalPages = Math.ceil(response.count / 10);
+        this.nextPage = response.next;
+        this.previousPage = response.previous;
+        
+        // Mettre à jour currentPage en fonction de l'URL
+        if (url) {
+          const pageMatch = url.match(/page=(\d+)/);
+          this.currentPage = pageMatch ? parseInt(pageMatch[1], 10) : 1;
+        } else {
+          this.currentPage = 1;
+        }
+        
         this.loading = false;
       },
       error: (err) => {
@@ -76,6 +52,18 @@ export class OrderComponent implements OnInit  {
         console.error('Error loading orders:', err);
       }
     });
+  }
+
+  loadNextPage(): void {
+    if (this.nextPage) {
+      this.loadOrders(this.nextPage);
+    }
+  }
+
+  loadPreviousPage(): void {
+    if (this.previousPage) {
+      this.loadOrders(this.previousPage);
+    }
   }
 
   viewOrderDetails(orderId: number): void {
@@ -90,7 +78,7 @@ export class OrderComponent implements OnInit  {
     switch (status.toLowerCase()) {
       case 'processing':
         return 'status-processing';
-      case 'completed':
+      case 'delivered':
         return 'status-completed';
       case 'cancelled':
         return 'status-cancelled';
@@ -101,6 +89,6 @@ export class OrderComponent implements OnInit  {
 
   handleImageError(event: any) {
     event.target.src = 'assets/images/placeholder-product.png';
-    event.target.onerror = null; // Prevent infinite loop if placeholder also fails
+    event.target.onerror = null;
   }
 }

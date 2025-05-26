@@ -50,16 +50,30 @@
       </div>
     </div>
   
-    <div *ngIf="totalPages > 1" class="pagination">
+
+    <div *ngIf="nextPage || previousPage" class="pagination">
+      <!-- Previous Button -->
       <button 
-        *ngFor="let page of [].constructor(totalPages); let i = index"
-        (click)="loadOrders(i + 1)"
-        [class.active]="currentPage === i + 1"
+        (click)="loadPreviousPage()"
+        [disabled]="!previousPage"
         class="page-btn"
       >
-        {{ i + 1 }}
+        <i class="fas fa-chevron-left"></i> Previous
+      </button>
+
+      <!-- Current Page Info -->
+      <span class="page-info">Page {{ currentPage }}</span>
+
+      <!-- Next Button -->
+      <button 
+        (click)="loadNextPage()"
+        [disabled]="!nextPage"
+        class="page-btn"
+      >
+        Next <i class="fas fa-chevron-right"></i>
       </button>
     </div>
+
   </div>
 
 

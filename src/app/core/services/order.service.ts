@@ -53,9 +53,19 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  getOrders(): Observable<OrderResponse> {
-    return this.http.get<OrderResponse>(`${this.apiUrl}/`);
+  // getOrders(): Observable<OrderResponse> {
+  //   return this.http.get<OrderResponse>(`${this.apiUrl}/`);
+  // }
+
+getOrders(url?: string): Observable<OrderResponse> {
+  if (url) {
+    // Utiliser l'URL complète fournie par l'API
+    return this.http.get<OrderResponse>(url);
+  } else {
+    // Première requête
+    return this.http.get<OrderResponse>(`${this.apiUrl}`);
   }
+}
 
   getOrderById(id: number): Observable<SingleOrderResponse> {
     return this.http.get<SingleOrderResponse>(`${this.apiUrl}/${id}/`);
