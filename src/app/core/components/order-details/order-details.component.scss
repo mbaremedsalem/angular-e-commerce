@@ -255,8 +255,10 @@
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* Changé de center à flex-start */
   z-index: 1000;
+  overflow-y: auto; /* Permet le défilement si le contenu est trop long */
+  padding: 20px 0; /* Ajoute un peu d'espace en haut et en bas */
 }
 
 .modal-content {
@@ -266,6 +268,9 @@
   max-width: 500px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   overflow: hidden;
+  margin: 20px 0; /* Ajoute de la marge pour le défilement */
+  max-height: 90vh; /* Limite la hauteur maximale */
+  overflow-y: auto; /* Permet le défilement à l'intérieur du modal si nécessaire */
 }
 
 .modal-header {
@@ -386,12 +391,28 @@
 }
 
 /* Responsive */
-@media (max-width: 576px) {
-  .methods-grid {
-    grid-template-columns: 1fr;
-  }
-  
+/* Pour les très petits écrans */
+@media (max-width: 400px) {
   .modal-content {
     width: 95%;
+    max-height: 85vh;
+  }
+  
+  .modal-body {
+    max-height: calc(85vh - 150px);
+    padding: 15px;
+  }
+  
+  .methods-grid {
+    gap: 10px;
+  }
+  
+  .method-card {
+    padding: 10px;
+    
+    img {
+      width: 50px;
+      height: 35px;
+    }
   }
 }
