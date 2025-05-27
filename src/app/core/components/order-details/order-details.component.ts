@@ -57,7 +57,7 @@ export class OrderDetailsComponent implements OnInit {
       id: 'stripe',
       name: 'Carte Bancaire',
       image: 'stripe.png',
-      apiEndpoint: `${environment.domain}/payment/stripe/`
+      apiEndpoint: `${environment.domain}/api/create-checkout-session/`
     }
   ];
 
@@ -166,25 +166,63 @@ export class OrderDetailsComponent implements OnInit {
     this.selectedMethod = method;
   }
 
-  processPayment(): void {
-    if (!this.selectedMethod || !this.order) return;
+processPayment(): void {
+  if (!this.selectedMethod || !this.order) return;
 
-    this.paymentProcessing = true;
-    
-    const paymentData = {
-      order_id: this.order.id,
-      amount: this.order.total_amount,
-      payment_method: this.selectedMethod.id
+  this.paymentProcessing = true;
+  
+  // Préparer les données de paiement communes
+  const paymentData: any = {
+    order_id: this.order.id,
+    amount: this.order.total_amount,
+    payment_method: this.selectedMethod.id
+  };
+
+  // Cas spécifique pour Stripe
+  if (this.selectedMethod.id === 'stripe') {
+    // Préparer le corps spécifique pour Stripe
+    const stripeData = {
+      street: this.order.street_fr || this.order.street_ar || '',
+      city: this.order.city_fr || this.order.city_ar || '',
+      state: this.order.state_fr || this.order.state_ar || '',
+      zip_code: this.order.zip_code || '',
+      phone: this.order.phone || '',
+      country: 'Maroc', // À adapter selon vos besoins
+      orderItems: this.order.orderItems.map(item => ({
+        product: item.product,
+        name: this.getItemName(item),
+        image: item.image ? `${this.apiUrl}${item.image}` : 'assets/images/placeholder-product.png',
+        quantity: item.quantity,
+        price: parseFloat(item.price)
+      }))
     };
 
+    this.http.post(this.selectedMethod.apiEndpoint, stripeData)
+      .subscribe({
+        next: (response: any) => {
+          if (response.session && response.session.url) {
+            // Ouvrir l'URL de paiement Stripe dans une nouvelle fenêtre
+            window.open(response.session.url, '_blank');
+            this.closePaymentModal();
+          } else {
+            this.error = 'Erreur: URL de paiement non reçue';
+          }
+          this.paymentProcessing = false;
+        },
+        error: (err) => {
+          this.error = 'Erreur lors de la connexion au service de paiement';
+          console.error('Payment error:', err);
+          this.paymentProcessing = false;
+        }
+      });
+  } else {
+    // Pour les autres méthodes de paiement
     this.http.post(this.selectedMethod.apiEndpoint, paymentData)
       .subscribe({
         next: (response: any) => {
-          // Gérer la réponse du paiement
           if (response.success) {
             alert('Paiement effectué avec succès!');
             this.closePaymentModal();
-            // Recharger les détails de la commande
             this.loadOrderDetails(this.order!.id);
           } else {
             this.error = response.message || 'Erreur lors du paiement';
@@ -198,4 +236,37 @@ export class OrderDetailsComponent implements OnInit {
         }
       });
   }
+}
+  // processPayment(): void {
+  //   if (!this.selectedMethod || !this.order) return;
+
+  //   this.paymentProcessing = true;
+    
+  //   const paymentData = {
+  //     order_id: this.order.id,
+  //     amount: this.order.total_amount,
+  //     payment_method: this.selectedMethod.id
+  //   };
+
+  //   this.http.post(this.selectedMethod.apiEndpoint, paymentData)
+  //     .subscribe({
+  //       next: (response: any) => {
+  //         // Gérer la réponse du paiement
+  //         if (response.success) {
+  //           alert('Paiement effectué avec succès!');
+  //           this.closePaymentModal();
+  //           // Recharger les détails de la commande
+  //           this.loadOrderDetails(this.order!.id);
+  //         } else {
+  //           this.error = response.message || 'Erreur lors du paiement';
+  //         }
+  //         this.paymentProcessing = false;
+  //       },
+  //       error: (err) => {
+  //         this.error = 'Erreur lors de la connexion au service de paiement';
+  //         console.error('Payment error:', err);
+  //         this.paymentProcessing = false;
+  //       }
+  //     });
+  // }
 }
