@@ -65,7 +65,52 @@
           </div>
         </div>
       </div>
-  
+
+        <!-- Bouton Payer (visible seulement si le paiement n'est pas déjà effectué) -->
+      <div *ngIf="order?.payment_status === 'UNPAID'" class="payment-section">
+        <button (click)="openPaymentModal()" class="btn-pay">
+          <i class="fas fa-credit-card"></i> Payer maintenant
+        </button>
+      </div>
+
+      <!-- Modal de paiement -->
+      <div *ngIf="showPaymentModal" class="payment-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Paiement de la commande #{{ order?.id }}</h3>
+            <button (click)="closePaymentModal()" class="close-btn">&times;</button>
+          </div>
+          
+          <div class="modal-body">
+            <div class="payment-summary">
+              <p>Montant total à payer:</p>
+              <p class="total-amount">{{ order?.total_amount }} MRU</p>
+            </div>
+            
+            <div class="payment-methods">
+              <h4>Sélectionnez votre méthode de paiement</h4>
+              
+              <div class="methods-grid">
+                <div *ngFor="let method of paymentMethods" 
+                    class="method-card" 
+                    (click)="selectPaymentMethod(method)"
+                    [class.selected]="selectedMethod === method">
+                  <img [src]="'assets/images/' + method.image" [alt]="method.name">
+                  <span>{{ method.name }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal-footer">
+            <button (click)="closePaymentModal()" class="btn-cancel">Annuler</button>
+            <button (click)="processPayment()" class="btn-confirm" [disabled]="!selectedMethod">
+              Confirmer le paiement
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="order-actions">
         <button routerLink="/orders" class="btn-back">
           <i class="fas fa-arrow-left"></i> Retour aux commandes

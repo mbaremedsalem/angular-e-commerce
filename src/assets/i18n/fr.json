@@ -19,7 +19,7 @@
       },
     
     "PRODUCT": {
-
+      "VIEW_DETAILS":"Voire Detaile",
       "ERROR_LOADING": "Échec du chargement des produits. Veuillez réessayer plus tard.",
       "ADDED_TO_CART": "{{name}} ajouté au panier",
       "CLOSE": "Fermer",
