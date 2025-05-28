@@ -1,9 +1,10 @@
 {
     "/api": {
-      "target": "192.168.0.220:8000",
+      "target": "192.168.0.138:8000",
       "secure": false,
       "changeOrigin": true,
       "logLevel": "debug"
     }
+    
   }
   

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService, Order, SingleOrderResponse, OrderItem } from '../../services/order.service';
 import { environment } from 'src/app/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface PaymentMethod {
   id: string;
@@ -39,7 +39,7 @@ export class OrderDetailsComponent implements OnInit {
       id: 'masrivi',
       name: 'Masrivi',
       image: 'masrivi.png',
-      apiEndpoint: `${environment.domain}/payment/masrivi/`
+      apiEndpoint: `http://165.227.85.96/ayadi/create_transaction/`
     },
     {
       id: 'saddad',
@@ -177,9 +177,41 @@ processPayment(): void {
     amount: this.order.total_amount,
     payment_method: this.selectedMethod.id
   };
+  // Cas spécifique pour Masrivi
+  if (this.selectedMethod.id === 'masrivi') {
+    // Créer un formulaire dynamiquement et le soumettre
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = this.selectedMethod.apiEndpoint;
+    form.target = '_blank'; // Ouvre dans un nouvel onglet
 
+    // Ajouter les champs nécessaires
+    const addField = (name: string, value: string) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    };
+
+    addField('amount', this.order.total_amount.toString());
+    addField('currency', '929');
+    addField('description', 'Achat de produits');
+    // Ajoutez d'autres champs requis par Masrivi ici
+
+    // Ajouter le formulaire à la page et le soumettre
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Nettoyer
+    setTimeout(() => document.body.removeChild(form), 100);
+    
+    this.closePaymentModal();
+    this.loadOrderDetails(this.order!.id);
+    this.paymentProcessing = false;
+  }
   // Cas spécifique pour Stripe
-  if (this.selectedMethod.id === 'stripe') {
+  else if (this.selectedMethod.id === 'stripe') {
     // Préparer le corps spécifique pour Stripe
     const stripeData = {
       street: this.order.street_fr || this.order.street_ar || '',
@@ -187,15 +219,16 @@ processPayment(): void {
       state: this.order.state_fr || this.order.state_ar || '',
       zip_code: this.order.zip_code || '',
       phone: this.order.phone || '',
-      country: 'Maroc', // À adapter selon vos besoins
+      country: 'Mauritania', // À adapter selon vos besoins
       orderItems: this.order.orderItems.map(item => ({
         product: item.product,
         name: this.getItemName(item),
-        image: item.image ? `${this.apiUrl}${item.image}` : 'assets/images/placeholder-product.png',
+        image: item.image ? `${this.apiUrl}${item.image}` : 'https://192.168.0.220:8000/media/products/iphon1.jpg',
         quantity: item.quantity,
         price: parseFloat(item.price)
       }))
     };
+      console.log('les donner dustripe',stripeData);
 
     this.http.post(this.selectedMethod.apiEndpoint, stripeData)
       .subscribe({
@@ -237,36 +270,5 @@ processPayment(): void {
       });
   }
 }
-  // processPayment(): void {
-  //   if (!this.selectedMethod || !this.order) return;
 
-  //   this.paymentProcessing = true;
-    
-  //   const paymentData = {
-  //     order_id: this.order.id,
-  //     amount: this.order.total_amount,
-  //     payment_method: this.selectedMethod.id
-  //   };
-
-  //   this.http.post(this.selectedMethod.apiEndpoint, paymentData)
-  //     .subscribe({
-  //       next: (response: any) => {
-  //         // Gérer la réponse du paiement
-  //         if (response.success) {
-  //           alert('Paiement effectué avec succès!');
-  //           this.closePaymentModal();
-  //           // Recharger les détails de la commande
-  //           this.loadOrderDetails(this.order!.id);
-  //         } else {
-  //           this.error = response.message || 'Erreur lors du paiement';
-  //         }
-  //         this.paymentProcessing = false;
-  //       },
-  //       error: (err) => {
-  //         this.error = 'Erreur lors de la connexion au service de paiement';
-  //         console.error('Payment error:', err);
-  //         this.paymentProcessing = false;
-  //       }
-  //     });
-  // }
 }
